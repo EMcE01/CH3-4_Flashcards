@@ -1,4 +1,8 @@
 // TODO: Code a program header with a summary, author's FULL name, date, and GitHub repository URL
+/*
+https://github.com/EMcE01/CH3-4_Flashcards
+
+ */
 "use strict";
 
 // declare two arrays for the questions and answers
@@ -20,12 +24,15 @@ instead of using querySelector() for advanced selection like CSS selector suppor
 */
 const commandEl = document.getElementById("command"); // add, list, quiz, clear
 const commandErrorEl = document.getElementById("commandError");
+const commandError = document.querySelector("#commandError");
 
 const questionEl = document.getElementById("question");
 const questionErrorEl = document.getElementById("questionError");
+const question_er = document.querySelector("#questionError");
 
 const answerEl = document.getElementById("answer");
 const answerErrorEl = document.getElementById("answerError");
+const answerError = document.querySelector("#answerError");
 
 const outputEl = document.getElementById("output"); // display output to the user
 
@@ -45,6 +52,24 @@ form.addEventListener("submit", function (event) {
      - use a default block to display an "Unknown command" error using the commandErrorEL
      - NOTE: for "add" pass the question and answer trim value to the addCard function
      */
+
+    switch (commandEl.value) {
+        case 'add':
+            addCard(questionEl.value.trim(), answerEl.value.trim());
+            break;
+        case 'list':
+            listCards();
+            break;
+        case 'quiz':
+            showNextCard();
+            break;
+        case 'clear':
+            clearCards();
+            break;
+        case 'load_default':
+            loadDefault();
+            break;
+    }
 });
 
 /**
@@ -60,8 +85,12 @@ form.addEventListener("submit", function (event) {
  */
 function addCard(question, answer) {
     let dataValidationError = false;
-    if (customerName === "") {
-        customer_error.textContent = "Required";
+    if (question === "") {
+        question_er.textContent = "Required";
+        dataValidationError = true;
+    }
+    if (answer === "") {
+        answerError.textContent = "Required";
         dataValidationError = true;
     }
     // TODO: Finish me
