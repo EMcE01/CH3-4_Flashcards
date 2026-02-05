@@ -24,15 +24,13 @@ instead of using querySelector() for advanced selection like CSS selector suppor
 */
 const commandEl = document.getElementById("command"); // add, list, quiz, clear
 const commandErrorEl = document.getElementById("commandError");
-const commandError = document.querySelector("#commandError");
+const command_er = document.querySelector("#commandError");
 
 const questionEl = document.getElementById("question");
 const questionErrorEl = document.getElementById("questionError");
-const question_er = document.querySelector("#questionError");
 
 const answerEl = document.getElementById("answer");
 const answerErrorEl = document.getElementById("answerError");
-const answerError = document.querySelector("#answerError");
 
 const outputEl = document.getElementById("output"); // display output to the user
 
@@ -85,12 +83,13 @@ form.addEventListener("submit", function (event) {
  */
 function addCard(question, answer) {
     let dataValidationError = false;
+    //if (command)
     if (question === "") {
-        question_er.textContent = "Required";
+        questionErrorEl.textContent = "Required";
         dataValidationError = true;
     }
     if (answer === "") {
-        answerError.textContent = "Required";
+        answerErrorEl.textContent = "Required";
         dataValidationError = true;
     }
     // TODO: Finish me
