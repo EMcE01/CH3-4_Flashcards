@@ -92,6 +92,23 @@ function addCard(question, answer) {
         answerErrorEl.textContent = "Required";
         dataValidationError = true;
     }
+    if (dataValidationError) return;
+
+    // Capitalize first characters
+    question = capitalizeFirstChar(question);
+    answer = capitalizeFirstChar(answer);
+
+    // Ensure question ends with ?
+    if (!question.endsWith("?")) {
+        question += "?";
+    }
+
+    questions.push(question);
+    answers.push(answer);
+
+    outputEl.textContent =
+        `Card #${questions.length}\n${question}\n${answer}`;
+
     // TODO: Finish me
 }
 
@@ -104,7 +121,25 @@ function addCard(question, answer) {
  */
 function listCards() {
     // TODO: Finish me
-}
+    // Clear input fields
+    questionEl.textContent = "";
+    answerEl.textContent = "";
+
+    if (questions.length === 0) {
+        outputEl.textContent = "Error: No cards available.";
+        return;
+    }
+
+    let output = "All cards:\n";
+
+    for (let i in questions) {
+        output += `#${Number(i) + 1}: ${questions[i]}\n`;
+    }
+
+    outputEl.textContent = output;
+    }
+
+
 
 /**
  * Set the question and answer input fields to an empty string using textContent
