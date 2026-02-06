@@ -1,8 +1,14 @@
-// TODO: Code a program header with a summary, author's FULL name, date, and GitHub repository URL
 /*
+This program is to be used to create flashcards easily and then have the capability to quiz the user. There is
+a switch used to change the functions called based on the user's selection in the command list options. It also
+handles errors such as the user selecting to add a card without providing a question and answer to be added to the
+card.
+Developer: Ethan McEvoy
+2/6/2026
 https://github.com/EMcE01/CH3-4_Flashcards
 version: 2
  */
+
 "use strict";
 
 // declare two arrays for the questions and answers
@@ -36,6 +42,24 @@ const outputEl = document.getElementById("output"); // display output to the use
 
 const form = document.getElementById("flashcardForm");
 
+/*
+The next 7 lines are added to make an easier interface. These three buttons can be used during the quiz option so the
+user will not have to hit run repeatedly as well as allows them to return to the first flashcard of the quiz whenever
+they choose.
+ */
+
+const nextCardBtn = document.getElementById("nextCardBtn");
+const showAnswerBtn = document.getElementById("showAnswerBtn");
+const resetQuizBtn = document.getElementById("resetQuizBtn");
+const prevCardBtn = document.getElementById("prevCardBtn");
+
+nextCardBtn.addEventListener("click", showNextQuestion);
+showAnswerBtn.addEventListener("click", showCurrentAnswer);
+resetQuizBtn.addEventListener("click", resetQuiz);
+prevCardBtn.addEventListener("click", showPreviousQuestion);
+
+
+
 form.addEventListener("submit", function (event) {
     event.preventDefault(); // prevent default form button behavior
 
@@ -68,10 +92,90 @@ form.addEventListener("submit", function (event) {
             loadDefault();
             break;
         default:
-            commandErrorEl.textContent = "Unknown command";
+            command_er.textContent = "Unknown command";
             break;
     }
 });
+
+/*
+this function allows the user to skip seeing the answer of a question and go right to the next one saving them a click
+of the mouse. It also handles its own errors by checking that there are any questions to present.
+ */
+function showNextQuestion() {
+    if (questions.length === 0) {
+        outputEl.textContent = "Error: No cards available.";
+        return;
+    }
+
+    // Advance to the next question
+    currentIndex++;
+    if (currentIndex === questions.length) {
+        currentIndex = 0; // wrap around to the first card
+    }
+
+    // Display question only
+    displayAnswer = false;
+    outputEl.textContent =
+        `#${currentIndex + 1}\n${questions[currentIndex]}\n\nPress "Show Answer" to see the answer.`;
+
+    // Enable the Show Answer button
+    showAnswerBtn.disabled = false;
+}
+
+function showPreviousQuestion() {
+    if (questions.length === 0) {
+        outputEl.textContent = "Error: No cards available.";
+        return;
+    }
+
+    // Go back to the previous question
+    currentIndex--;
+    if (currentIndex < 0) {
+        currentIndex = questions.length - 1; // wrap around to the last card
+    }
+
+    // Display question only
+    displayAnswer = false;
+    outputEl.textContent =
+        `#${currentIndex + 1}\n${questions[currentIndex]}\n\nPress "Show Answer" to see the answer.`;
+
+    // Enable the Show Answer button
+    showAnswerBtn.disabled = false;
+}
+
+
+function showCurrentAnswer() {
+    if (questions.length === 0) {
+        outputEl.textContent = "Error: No cards available.";
+        return;
+    }
+
+    // Show answer for current card, but do NOT advance the index
+    outputEl.textContent =
+        `#${currentIndex + 1}\n${questions[currentIndex]}\n${answers[currentIndex]}`;
+
+    // Disable Show Answer until Next Question is clicked
+    showAnswerBtn.disabled = true;
+}
+
+
+function resetQuiz() {
+    if (questions.length === 0) {
+        outputEl.textContent = "Error: No cards available.";
+        return;
+    }
+
+    // Reset index to first card
+    currentIndex = 0;
+    displayAnswer = false;
+
+    outputEl.textContent =
+        `#${currentIndex + 1}\n${questions[currentIndex]}\n\nPress "Show Answer" to see the answer.`;
+
+    // Enable Show Answer button
+    showAnswerBtn.disabled = false;
+}
+
 
 /**
  * Verify that both the question and answer contain a values using a boolean comparison
@@ -149,14 +253,9 @@ function listCards() {
  * and display how many questions were loaded in the output area
  */
 function loadDefault() {
-    if (!confirm("Are you sure? This will delete all saved cards.")) {
-        outputEl.textContent = "Cancelled";
-        return;
-    }
+    handleClearCommand()
     questionEl.textContent = "";
     answerEl.textContent = "";
-
-    clearCards();
 
     questions.push("What is JavaScript?");
     answers.push("A programming language used for web development.");
@@ -216,14 +315,24 @@ function showNextCard() {
 }
 
 function handleClearCommand() {
-    if (!confirm("Are you sure? This will delete all saved cards.")) {
-        outputEl.textContent = "Cancelled";
-        return;
+    // Only ask for confirmation if there are cards
+    if (questions.length === 0) {
+        outputEl.textContent = "No cards to clear.";
+        return; // exit early, no confirm
     }
 
+    // Ask for confirmation since there are cards
+    if (!confirm("Are you sure? This will delete all saved cards.")) {
+        outputEl.textContent = "Cancelled";
+        return; // exit if user cancels
+    }
+
+    // Clear cards
     clearCards();
     outputEl.textContent = "All cards cleared.";
 }
+
+
 
 /**
  * Set the question and answer input fields to an empty string using textContent
@@ -241,8 +350,6 @@ function clearCards() {
 
     currentIndex = 0;
     displayAnswer = false;
-
-    outputEl.textContent = "All cards cleared.";
 }
 
 
