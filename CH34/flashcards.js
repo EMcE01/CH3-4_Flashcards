@@ -45,7 +45,7 @@ form.addEventListener("submit", function (event) {
     answerErrorEl.textContent = "";
     outputEl.textContent = "";
 
-    /* TODO: Finish me
+    /*
      - use a switch to run the appropriate function based on the commandEl.value
      - use a default block to display an "Unknown command" error using the commandErrorEL
      - NOTE: for "add" pass the question and answer trim value to the addCard function
@@ -62,10 +62,13 @@ form.addEventListener("submit", function (event) {
             showNextCard();
             break;
         case 'clear':
-            clearCards();
+            handleClearCommand();
             break;
         case 'load_default':
             loadDefault();
+            break;
+        default:
+            commandErrorEl.textContent = "Unknown command";
             break;
     }
 });
@@ -109,7 +112,6 @@ function addCard(question, answer) {
     outputEl.textContent =
         `Card #${questions.length}\n${question}\n${answer}`;
 
-    // TODO: Finish me
 }
 
 /**
@@ -120,7 +122,6 @@ function addCard(question, answer) {
  * NOTE: the first card should display #1 instead #0
  */
 function listCards() {
-    // TODO: Finish me
     // Clear input fields
     questionEl.textContent = "";
     answerEl.textContent = "";
@@ -148,8 +149,28 @@ function listCards() {
  * and display how many questions were loaded in the output area
  */
 function loadDefault() {
-    // TODO: Finish me
+    if (!confirm("Are you sure? This will delete all saved cards.")) {
+        outputEl.textContent = "Cancelled";
+        return;
+    }
+    questionEl.textContent = "";
+    answerEl.textContent = "";
+
+    clearCards();
+
+    questions.push("What is JavaScript?");
+    answers.push("A programming language used for web development.");
+
+    questions.push("What does DOM stand for?");
+    answers.push("Document Object Model.");
+
+    questions.push("What keyword declares a constant?");
+    answers.push("const");
+
+    outputEl.textContent = `${questions.length} default cards loaded.`;
+
 }
+
 
 /**
  * Set the question and answer input fields to an empty string using textContent
@@ -168,7 +189,40 @@ function loadDefault() {
  *    set displayAnswer to true
   */
 function showNextCard() {
-    // TODO: Finish me
+    questionEl.textContent = "";
+    answerEl.textContent = "";
+
+    if (questions.length === 0) {
+        outputEl.textContent = "Error: No cards available.";
+        return;
+    }
+
+    if (displayAnswer) {
+        outputEl.textContent =
+            `#${currentIndex + 1}\n${questions[currentIndex]}\n${answers[currentIndex]}\n\nPress Run to see the next question.`;
+
+        displayAnswer = false;
+        currentIndex++;
+
+        if (currentIndex === questions.length) {
+            currentIndex = 0;
+        }
+    } else {
+        outputEl.textContent =
+            `#${currentIndex + 1}\n${questions[currentIndex]}\n\nPress Run to see the answer.`;
+
+        displayAnswer = true;
+    }
+}
+
+function handleClearCommand() {
+    if (!confirm("Are you sure? This will delete all saved cards.")) {
+        outputEl.textContent = "Cancelled";
+        return;
+    }
+
+    clearCards();
+    outputEl.textContent = "All cards cleared.";
 }
 
 /**
@@ -179,8 +233,18 @@ function showNextCard() {
  * display "All cards cleared." to the output area
  */
 function clearCards() {
-    // TODO: Finish me
+    questionEl.textContent = "";
+    answerEl.textContent = "";
+
+    questions.length = 0;
+    answers.length = 0;
+
+    currentIndex = 0;
+    displayAnswer = false;
+
+    outputEl.textContent = "All cards cleared.";
 }
+
 
 /**
  * if !str then return the str unchanged
@@ -189,5 +253,7 @@ function clearCards() {
  * @returns {*|string} where the first letter is uppercased
  */
 function capitalizeFirstChar(str) {
-    // TODO: Finish me
+    if (!str) return str;
+    return str.charAt(0).toUpperCase() + str.slice(1);
 }
+
