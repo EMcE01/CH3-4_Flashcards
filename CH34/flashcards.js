@@ -122,6 +122,9 @@ function showNextQuestion() {
     showAnswerBtn.disabled = false;
 }
 
+/*this function is essentially the inverse of the next question button. This decrements the index and loops back to
+the last question when the user hits previous but it on the first question.
+ */
 function showPreviousQuestion() {
     if (questions.length === 0) {
         outputEl.textContent = "Error: No cards available.";
@@ -143,7 +146,9 @@ function showPreviousQuestion() {
     showAnswerBtn.disabled = false;
 }
 
-
+/*
+This function is used to show the answer after displaying the card.
+ */
 function showCurrentAnswer() {
     if (questions.length === 0) {
         outputEl.textContent = "Error: No cards available.";
@@ -152,7 +157,7 @@ function showCurrentAnswer() {
 
     // Show answer for current card, but do NOT advance the index
     outputEl.textContent =
-        `#${currentIndex + 1}\n${questions[currentIndex]}\n${answers[currentIndex]}`;
+        `#${currentIndex + 1}\n${questions[currentIndex]}\n${answers[currentIndex]}/n/nPress "Next Question to advance`;
 
     // Disable Show Answer until Next Question is clicked
     showAnswerBtn.disabled = true;
@@ -244,33 +249,6 @@ function listCards() {
     outputEl.textContent = output;
     }
 
-
-
-/**
- * Set the question and answer input fields to an empty string using textContent
- * Clear the current questions and answers using the function
- * and then load a few default questions and answers
- * and display how many questions were loaded in the output area
- */
-function loadDefault() {
-    handleClearCommand()
-    questionEl.textContent = "";
-    answerEl.textContent = "";
-
-    questions.push("What is JavaScript?");
-    answers.push("A programming language used for web development.");
-
-    questions.push("What does DOM stand for?");
-    answers.push("Document Object Model.");
-
-    questions.push("What keyword declares a constant?");
-    answers.push("const");
-
-    outputEl.textContent = `${questions.length} default cards loaded.`;
-
-}
-
-
 /**
  * Set the question and answer input fields to an empty string using textContent
  * if there are no questions, display an error in the output area and return
@@ -298,7 +276,7 @@ function showNextCard() {
 
     if (displayAnswer) {
         outputEl.textContent =
-            `#${currentIndex + 1}\n${questions[currentIndex]}\n${answers[currentIndex]}\n\nPress Run to see the next question.`;
+            `#${currentIndex + 1}\n${questions[currentIndex]}\n${answers[currentIndex]}\n\nPress Next Question to see the next question.`;
 
         displayAnswer = false;
         currentIndex++;
@@ -308,7 +286,7 @@ function showNextCard() {
         }
     } else {
         outputEl.textContent =
-            `#${currentIndex + 1}\n${questions[currentIndex]}\n\nPress Run to see the answer.`;
+            `#${currentIndex + 1}\n${questions[currentIndex]}\n\nPress Show Answer to see the answer.`;
 
         displayAnswer = true;
     }
@@ -318,20 +296,48 @@ function handleClearCommand() {
     // Only ask for confirmation if there are cards
     if (questions.length === 0) {
         outputEl.textContent = "No cards to clear.";
-        return; // exit early, no confirm
+        return true; // nothing to clear, treat as "okay to continue"
     }
 
     // Ask for confirmation since there are cards
     if (!confirm("Are you sure? This will delete all saved cards.")) {
         outputEl.textContent = "Cancelled";
-        return; // exit if user cancels
+        return false; // user canceled
     }
 
     // Clear cards
     clearCards();
     outputEl.textContent = "All cards cleared.";
+    return true; // cleared successfully
 }
 
+
+/**
+ * Set the question and answer input fields to an empty string using textContent
+ * Clear the current questions and answers using the function
+ * and then load a few default questions and answers
+ * and display how many questions were loaded in the output area
+ */
+function loadDefault() {
+    // Only continue if clearing was confirmed
+    if (!handleClearCommand()) {
+        return; // stop loading defaults
+    }
+
+    questionEl.textContent = "";
+    answerEl.textContent = "";
+
+    questions.push("What is JavaScript?");
+    answers.push("A programming language used for web development.");
+
+    questions.push("What does DOM stand for?");
+    answers.push("Document Object Model.");
+
+    questions.push("What keyword declares a constant?");
+    answers.push("const");
+
+    outputEl.textContent = `${questions.length} default cards loaded.`;
+}
 
 
 /**
