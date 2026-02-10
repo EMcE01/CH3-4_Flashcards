@@ -84,9 +84,7 @@ DOM manipulation is used extensively to update the UI based on user interaction.
 
 **Ethan McEvoy**
 
-- GitHub Profile: **[PLACEHOLDER – Add your GitHub profile link here]**
-- Project Repository:  
-  https://github.com/EMcE01/CH3-4_Flashcards
+- GitHub Profile: https://github.com/EMcE01
 ---
 
 ## License
