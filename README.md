@@ -49,6 +49,20 @@ DOM manipulation is used extensively to update the UI based on user interaction.
 ---
 
 ## Screenshots
+- add a new card
+![Adding a card](images/AddCard.png)
+- Can't add a blank card
+![Adding a blank card](images/ErrorHandling.png)
+- list existing cards
+![Listing the cards](images/ListCards.png)
+- clear out for new set
+![clear all cards](images/ClearCards.png)
+- load default for testing
+![Load cards](images/LoadDefault.png)
+- quiz yourself
+![quiz](images/QuizMode.png)
+
+
 
 ---
 
