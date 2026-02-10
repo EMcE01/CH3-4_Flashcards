@@ -292,6 +292,10 @@ function showNextCard() {
     }
 }
 
+/*
+rather than having this code twice in load and clear, I made a new function called by both.
+If there are no cards to be cleared than it simply clears them and skips the confirm.
+ */
 function handleClearCommand() {
     // Only ask for confirmation if there are cards
     if (questions.length === 0) {
