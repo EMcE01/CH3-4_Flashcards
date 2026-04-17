@@ -1,28 +1,28 @@
-# Flashcard Quiz Application CHs 3/4
+# 🧮 Flashcard Quiz Application CHs 3/4
 
-## Overview
+### 👤 Author
+- Ethan McEvoy (https://github.com/EMcE01)
+
+---
+
+## 📚 Table of Contents
+- [📖 Project Overview](#-project-overview--summary)
+- [🧰 Tech Stack](#-tech-stack)
+- [🛠 Development Tools](#-development-tools)
+- [💡 Core Concepts](#-core-concept--new-concepts)
+- [✨ Features](#-features)
+- [🖼 Visual Aids](#-visual-aids-screenshots--gifs--reports--data-input--output)
+- [🧠 Reflection](#-reflection-what-i-learned)
+
+---
+
+## 📖 Project Overview / Summary
+> 🔝 [Back to TOC](#-table-of-contents)
 
 This program is a JavaScript-based flashcard application designed to make creating and studying flashcards quick and easy. Users can add custom flashcards, list existing cards, 
 and quiz themselves using an interactive interface. The quiz mode allows users to navigate forward and backward through cards, reveal answers on demand, and reset the quiz at any time.
 
 The application also includes built-in error handling to ensure users provide valid input when creating flashcards.
-
----
-
-## Features
-
-- Add flashcards with a question and answer
-- Automatically formats questions and answers
-- List all stored flashcards
-- Interactive quiz mode
-  - Next and previous card navigation
-  - Show/hide answers
-  - Reset quiz to the beginning
-- Load default flashcards and provides a confirm to verify the user want's to delete all current cards
-- Clear all flashcards with confirmation and provides a confirm to verify the user want's to delete all current cards
-- User-friendly error handling
-
----
 
 ## How It Works
 
@@ -48,7 +48,59 @@ DOM manipulation is used extensively to update the UI based on user interaction.
 
 ---
 
-## Screenshots
+## 🧰 Tech Stack
+> 🔝 [Back to TOC](#-table-of-contents)
+
+| Category       | Technology Used |
+|----------------|----------------|
+| Frontend       | HTML, CSS|
+| Backend        | JavaScript|
+
+
+---
+
+## 🛠 Development Tools
+> 🔝 [Back to TOC](#-table-of-contents)
+
+| Tool | Purpose |
+|------|--------|
+| WebStorm | Primary Code editor |
+| VS Code | Code editor |
+| GitHub | Version control |
+| Chrome DevTools | Debugging |
+
+---
+
+## 💡 Core Concept / New Concepts
+> 🔝 [Back to TOC](#-table-of-contents)
+
+- 📌 data validation – not allowing for blank questions or answers
+- 📌 adding buttons – provides enough buttons to perform each task
+- 📌 confirm – pop-up to confirm from user that all cards will be deleted
+  
+---
+
+## ✨ Features
+> 🔝 [Back to TOC](#-table-of-contents)
+
+- Add flashcards with a question and answer
+- Automatically formats questions and answers
+- List all stored flashcards
+- Interactive quiz mode
+  - Next and previous card navigation
+  - Show/hide answers
+  - Reset quiz to the beginning
+- Load default flashcards and provides a confirm to verify the user want's to delete all current cards
+- Clear all flashcards with confirmation and provides a confirm to verify the user want's to delete all current cards
+- User-friendly error handling
+
+---
+
+
+
+## 🖼 Visual Aids: Screenshots / GIFs / Reports / Data Input & Output
+> 🔝 [Back to TOC](#-table-of-contents)
+
 - add a new card
 ![Adding a card](images/AddCard.png)
 - Can't add a blank card
@@ -62,30 +114,9 @@ DOM manipulation is used extensively to update the UI based on user interaction.
 - quiz yourself
 ![quiz](images/QuizMode.png)
 
-
-
 ---
 
-## Technologies Used
+## 🧠 Reflection: 
+> 🔝 [Back to TOC](#-table-of-contents)
 
-- JavaScript
-- HTML
-- CSS
-- DOM Manipulation
-
----
-
-## Version
-**Date:** 2/6/2026
-
----
-
-## Developer
-
-**Ethan McEvoy**
-
-- GitHub Profile: https://github.com/EMcE01
----
-
-## License
-This project is for educational purposes.
+I went above and beyond this assignment's requirements. I wanted to make something that students of all majors could use. I played around with the ability to add pictures to both the questions and answers as some majors require visual representations to grasp the question. I added several buttons I was not asked for as I felt that simply having one button that did everything made it not as user friendly. My biggest issue I ran into was making the buttons a submit rather than just buttons. This caused the order of the questions start to get shuffled. 
